@@ -1,5 +1,6 @@
 #include "C:\raylib\raylib\src\raylib.h" 
 #include "grid.h"
+#include "blocks.cpp"
 
 int main() 
 {
@@ -11,16 +12,17 @@ int main()
     SetTargetFPS(60); 
 
     Grid grid = Grid();
-    grid.grid[0][0] = 1;
-    grid.grid[3][5] = 4;
-    grid.grid[17][8] = 7;
+
     grid.Print();
+
+    LBlock block = LBlock();
 
     while(WindowShouldClose() == false) // While windows should close; while windows is not closed; while window is opened
     {
         BeginDrawing(); // CREATES A blank canvas
         ClearBackground(darkBlue); // Clear background and set the color of the background
         grid.Draw();
+        block.Draw();
         EndDrawing(); // ENDS the canvas drawing       
     }
 

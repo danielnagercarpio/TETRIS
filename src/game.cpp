@@ -10,7 +10,7 @@ Game::Game()
     gameOver = false;
     score = 0;
     InitAudioDevice();
-    music = LoadMusicStream("Sounds/music.mp3");
+    music = LoadMusicStream("Sounds/08 - Puta.mp3");
     PlayMusicStream(music);
     rotateSound = LoadSound("Sounds/rotate.mp3");
     clearSound = LoadSound("Sounds/clear.mp3");
@@ -18,6 +18,8 @@ Game::Game()
 
 Game::~Game() // Create destructor
 {
+    UnloadSound(rotateSound);
+    UnloadSound(clearSound);
     UnloadMusicStream(music);
     CloseAudioDevice();
 }
@@ -55,7 +57,6 @@ void Game::Draw()
             nextBlock.Draw(270,270);
             break;
     }
-    nextBlock.Draw(270, 270);
 }
 
 void Game::HandleInput()

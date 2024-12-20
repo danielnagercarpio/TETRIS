@@ -18,7 +18,7 @@ bool EventTriggered(double interval)
 int main() 
 {
     Color darkBlue = {44,44,127,255};
-    InitWindow(500,620, "raylib Tetris");
+    InitWindow(500,620, "DOZOM TETRIS");
     // How fast the game will run. 60 is the number of frames per seconds. 
     // If we don't specify this, the computer will run as fast as it can,
     // and it can vary between computers. We fix it to be equitative between computers
@@ -31,7 +31,7 @@ int main()
     {
         UpdateMusicStream(game.music);
         game.HandleInput();
-        if(EventTriggered(0.2)){
+        if(EventTriggered(0.1)){
             game.MoveBlockDown(); // Game Loop is executed 60 times per second
         }
         BeginDrawing(); // CREATES A blank canvas

@@ -1,5 +1,7 @@
 #include "game.h"
 #include <random>
+#include <iostream>
+
 
 Game::Game()
 {
@@ -14,7 +16,9 @@ Game::Game()
     PlayMusicStream(music);
     rotateSound = LoadSound("Sounds/rotate.mp3");
     clearSound = LoadSound("Sounds/clear.mp3");
+    JActive = false;
 }
+
 
 Game::~Game() // Create destructor
 {
@@ -69,6 +73,14 @@ void Game::HandleInput()
     }
     switch(keyPressed)
     {
+        case KEY_J:
+            if (JActive)
+            {
+                JActive = false;
+            } else {
+                JActive = true;
+            }
+            break;
         case KEY_LEFT:
             MoveBlockLeft();
             break;
@@ -157,6 +169,11 @@ bool Game::IsBlockOutside()
         }
     }
     return false;
+}
+
+bool Game::IsJActive()
+{
+    return JActive;
 }
 
 void Game::rotateBlock()

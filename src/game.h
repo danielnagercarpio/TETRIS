@@ -10,6 +10,7 @@ public:
     void Draw();
     void HandleInput();
     void MoveBlockDown();
+    bool IsJActive();
     bool gameOver;
     int score;
     Music music;
@@ -21,6 +22,7 @@ private:
     void MoveBlockLeft();
     void MoveBlockRight();
     bool IsBlockOutside();
+    bool JActive;
     void rotateBlock();
     void LockBlock();
     bool BlockFits();

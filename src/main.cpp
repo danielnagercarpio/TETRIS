@@ -35,7 +35,16 @@ int main()
             game.MoveBlockDown(); // Game Loop is executed 60 times per second
         }
         BeginDrawing(); // CREATES A blank canvas
-        ClearBackground(darkBlue); // Clear background and set the color of the background
+
+        if(game.IsJActive())
+        {
+            ClearBackground(electricBlue);
+        } else {
+            ClearBackground(darkBlue);
+        }
+
+
+         // Clear background and set the color of the background
         DrawTextEx(font, "Score", {365, 15}, 38, 2, WHITE);
 
         DrawTextEx(font, "Next", {370, 175}, 38, 2, WHITE);

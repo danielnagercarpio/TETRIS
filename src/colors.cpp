@@ -11,6 +11,7 @@ const Color cyan = {21, 204, 209, 255};
 const Color blue = {13, 64, 216, 122};
 const Color lightBlue = {59, 85, 162, 255};
 const Color darkBlue = {44, 44, 127, 255};
+const Color electricBlue = {35, 232, 255, 255};
 
 std::vector<Color> GetCellColors()
 {

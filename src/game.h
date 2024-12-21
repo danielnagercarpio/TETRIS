@@ -7,6 +7,9 @@ class Game
 public:
     Game();
     ~Game();
+    int GetTimeCounter();
+    int IncrementTimeCounter();
+    int ResetTimeCounter();
     void Draw();
     void HandleInput();
     void MoveBlockDown();
@@ -17,6 +20,7 @@ public:
 
 private:
     Grid grid;
+    int timeCounter = 0;
     std::vector<Block> GetAllBlocks();
     Block GetRandomBlock();
     void MoveBlockLeft();

@@ -27,22 +27,35 @@ int main()
     Font font = LoadFontEx("Font/monogram.ttf", 64, 0, 0);
     Game game = Game();
 
+    float currentTime = GetTime();
+
+    float changeToElectricColorTime = currentTime + 20.0; // ten second timer
+    float resetColor;
+
+    int remainingTime;
+
     while(WindowShouldClose() == false) // While windows should close; while windows is not closed; while window is opened
     {
         UpdateMusicStream(game.music);
         game.HandleInput();
         if(EventTriggered(0.1)){
             game.MoveBlockDown(); // Game Loop is executed 60 times per second
+            remainingTime = (int)changeToElectricColorTime - currentTime;
+            currentTime = GetTime();
         }
-        BeginDrawing(); // CREATES A blank canvas
-
-        if(game.IsJActive())
-        {
+        
+        if (remainingTime < 0) {
             ClearBackground(electricBlue);
         } else {
             ClearBackground(darkBlue);
         }
 
+        BeginDrawing(); // CREATES A blank canvas
+
+        if(game.IsJActive())
+        {
+            ClearBackground(electricBlue);
+        } 
 
          // Clear background and set the color of the background
         DrawTextEx(font, "Score", {365, 15}, 38, 2, WHITE);

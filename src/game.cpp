@@ -17,6 +17,7 @@ Game::Game()
     rotateSound = LoadSound("Sounds/rotate.mp3");
     clearSound = LoadSound("Sounds/clear.mp3");
     JActive = false;
+    timeCounter = 0;
 }
 
 
@@ -26,6 +27,21 @@ Game::~Game() // Create destructor
     UnloadSound(clearSound);
     UnloadMusicStream(music);
     CloseAudioDevice();
+}
+
+int Game::GetTimeCounter()
+{
+    return timeCounter;
+}
+
+int Game::IncrementTimeCounter()
+{
+    timeCounter++;
+}
+
+int Game::ResetTimeCounter()
+{
+    timeCounter++;
 }
 
 Block Game::GetRandomBlock()

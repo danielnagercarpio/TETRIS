@@ -3,14 +3,16 @@
 
 Grid::Grid()
 {
+    offsetX = 11;
+    offsetY = 11;
     numRows = 20;
     numCols = 10;
-    cellSize = 30;
+    cellSize = 30; // in px, size
     Initialize();
     colors = GetCellColors();
 }
 
-void Grid::Initialize()
+void Grid::Initialize() // Creates a grid (20 * 10) -> 200 cells
 {
     for(int row = 0; row < numRows; row++)
     {
@@ -32,6 +34,34 @@ void Grid::Print()
         std::cout << std::endl;
     }
 }
+
+void Grid::ClearDownGrid(int row)
+{
+    for(int r = row; r < numRows; r++) {
+        for(int column = 0; column < numCols; column++)
+        {
+            grid[r][column] = 0;
+        }
+    }
+    
+
+}
+
+bool Grid::IsRowFilled(int row) 
+{
+    for(int column = 0; column < numCols; column++)
+    {
+        if(grid[row][column] != 0 && row < numRows)
+        {
+            std::cout << "row" << row;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
 
 std::vector<Color> Grid::GetCellColors()
 {
@@ -55,7 +85,7 @@ void Grid::Draw()
         {
             int cellValue = grid[row][column];
 //            DrawRectangle(posX, posY, width, height, color);
-            DrawRectangle(column * cellSize+11, row * cellSize+11, cellSize-1, cellSize-1, colors[cellValue]); // modyfied to 11 (padding + 1)
+            DrawRectangle(column * cellSize+offsetX, row * cellSize+offsetY, cellSize-1, cellSize-1, colors[cellValue]); // modyfied to 11 (padding + 1)
         }
     }
 }

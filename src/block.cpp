@@ -1,4 +1,5 @@
 #include "block.h"
+#include <iostream>
 
 Block::Block()
 {
@@ -52,4 +53,14 @@ void Block::UndoRotation()
     {
         rotationState = cells.size() - 1;
     }
+}
+
+int Block::GetCenterPositionX()
+{
+    return columnOffset;
+}
+
+int Block::GetCenterPositionY()
+{
+    return rowOffset;
 }

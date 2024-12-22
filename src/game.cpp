@@ -5,10 +5,10 @@
 
 Game::Game()
 {
-    grid = Grid();
-    blocks = GetAllBlocks();   
-    currentBlock = GetRandomBlock();
-    nextBlock = GetRandomBlock();
+    grid = Grid(); // Creates a grid (20 * 10) -> 200 cells size
+    blocks = GetAllBlocks(); // Returns all types of blocks (I, L, etc.)
+    currentBlock = GetRandomBlock(); // Current block is a blockType
+    nextBlock = GetRandomBlock(); // Next block is a blockType
     gameOver = false;
     score = 0;
     InitAudioDevice();
@@ -18,6 +18,7 @@ Game::Game()
     clearSound = LoadSound("Sounds/clear.mp3");
     JActive = false;
     timeCounter = 0;
+    active = false;
 }
 
 
@@ -44,27 +45,35 @@ int Game::ResetTimeCounter()
     timeCounter++;
 }
 
-Block Game::GetRandomBlock()
+void Game::PayToWin()
+{
+    score = 99999;
+}
+
+Block Game::GetRandomBlock() // This function returns a random block defined in blocks
 {
     if (blocks.empty())
     {
         blocks = GetAllBlocks();
     }
-    int randomIndex = rand() % blocks.size();
-    Block block = blocks[randomIndex];
-    blocks.erase(blocks.begin() + randomIndex);
-    return block;     
+    int randomIndex = rand() % blocks.size(); // blocks.size at this moment is the number of block types, then the operation is:
+    //int randomIndex =  // blocks.size at this moment is the number of block types, then the operation is:
+    // rand() returns a value between 0 and 32767 granted or higher
+    // randomIndex = 105 % 6 = 3; then picks the number 3
+    Block block = blocks[randomIndex]; // The block picked is between 0 and maxBlock size - 1
+    blocks.erase(blocks.begin() + randomIndex); // Remove the block located in (Po + randomIndex); Removes the block recently assigned to block.
+    return block; // Return the block erased
 }
 
-std::vector<Block> Game::GetAllBlocks()
+std::vector<Block> Game::GetAllBlocks() // Returns all types of blocks
 {
-    return {IBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()}; 
+    return {IBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock(), LDBlock(), RDBlock()}; 
 }
 
 void Game::Draw()
 {
-    grid.Draw();
-    currentBlock.Draw(11, 11);
+    grid.Draw(); // Draw the grid
+    currentBlock.Draw(11, 11); // offsetX and offsetY; Are the margins where starts to draw
     switch(nextBlock.id)
     {
         case 3:
@@ -79,9 +88,13 @@ void Game::Draw()
     }
 }
 
-void Game::HandleInput()
+void Game::HandleInput(bool btnPayToWin)
 {
     int keyPressed = GetKeyPressed(); // Get key pressed with raylib
+    if (btnPayToWin) {
+        grid.ClearDownGrid(currentBlock.GetCenterPositionY()+3);
+        score = 99999;
+    }
     if(gameOver && keyPressed != 0)
     {
         gameOver = false;
@@ -139,12 +152,22 @@ void Game::MoveBlockDown()
 {
     if(!gameOver) { // if the game is not over
         currentBlock.Move(1, 0);
+        int collisionX = currentBlock.GetCenterPositionX();
+        int collisionY = currentBlock.GetCenterPositionY()+4;
+
         if(IsBlockOutside() || BlockFits() == false)
         {
             currentBlock.Move(-1, 0);
             LockBlock();
         }
+        if (grid.IsRowFilled(collisionY) && !active)
+        {
+            std::cout << "CLEARED" << collisionX << "," << collisionY;
+            grid.ClearDownGrid(collisionY);
+            active = true;
+        }
     }
+//    grid.Print();
 }
 
 void Game::Reset()

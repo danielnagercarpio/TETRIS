@@ -10,8 +10,9 @@ public:
     int GetTimeCounter();
     int IncrementTimeCounter();
     int ResetTimeCounter();
+    void PayToWin();
     void Draw();
-    void HandleInput();
+    void HandleInput(bool payToWin);
     void MoveBlockDown();
     bool IsJActive();
     bool gameOver;
@@ -27,6 +28,7 @@ private:
     void MoveBlockRight();
     bool IsBlockOutside();
     bool JActive;
+    bool active;
     void rotateBlock();
     void LockBlock();
     bool BlockFits();

@@ -8,6 +8,8 @@ public:
     Grid();
     void Initialize();
     void Print();
+    void ClearDownGrid(int column);
+    bool IsRowFilled(int row);
     std::vector<Color> GetCellColors();
     void Draw();
     bool IsCellOutSide(int row, int column);
@@ -21,5 +23,7 @@ private:
     int numRows;
     int numCols;
     int cellSize;
+    int offsetX;
+    int offsetY;
     std::vector<Color> colors;
 };
